@@ -116,7 +116,7 @@ Eigenvalue Problem: $\mathbf{Ax} = \lambda \mathbf{x}$
 \end{compactenum}
 
 \section{Eigendecomposition}
-$\mathbf{A} \in \mathbb{R}^{N \times N}$ with $N$ linear independent eigenvectors, then: $\mathbf{A} = \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q}^{-1}$. $\mathbf{Q} \in \mathbb{R}^{N \times N}$, $i$-th column is the $i$-th eigenvector of $\mathbf{A}$. $\boldsymbol{\Lambda}$ is diagonal and $\boldsymbol{\lambda}_{i,i}$ is the $i$-th eigenvector. Every symmetric matrix can be ``eigendecomposed''. 
+Decompose diagonizable $\mathbf{A} \in \mathbb{R}^{N \times N}$ into $\mathbf{A} = \mathbf{Q} \boldsymbol{\Lambda} \mathbf{Q}^{-1}$. $\mathbf{Q} \in \mathbb{R}^{N \times N}$, $i$-th column is the $i$-th eigenvector of $\mathbf{A}$. $\boldsymbol{\Lambda}$ is diagonal and $\boldsymbol{\lambda}_{i,i}$ is the $i$-th eigenvector. If $\mathbf{A}$ is symmetric, then $\mathbf{Q}\Lambda \mathbf{Q}^\top$.
 $\mathbf{A}^{-1} = \mathbf{Q} \boldsymbol{\Lambda}^{-1} \mathbf{Q}^{-1}$, $(\boldsymbol{\Lambda}^{-1})_{i,i} = \frac{1}{\lambda_i}$
 Calculate eigenvalues $\lambda_i$ and eigenvectors $q_i$. Normalise the eigenvectors. Put eigenvectors as columns into $\mathbf{Q}$ and eigenvalues into the diagonal of $\boldsymbol{\Lambda}$.
 
@@ -134,7 +134,7 @@ Calculate eigenvalues $\lambda_i$ and eigenvectors $q_i$. Normalise the eigenvec
 	\item calculate $\mathbf{A}^T \mathbf{A}$.
 	\item calculate eigenvalues of $\mathbf{A}^T \mathbf{A}$, the square root of them are the diagonal elements of $\mathbf{D}$.
 	\item calculate eigenvectors of $\mathbf{A}^T \mathbf{A}$ using the eigenvalues resulting in the columns of $\mathbf{V}$.
-	\item calculate the missing matrix: $\mathbf{U} = \mathbf{A} \mathbf{V} \mathbf{D}^{-1}$. Can be checked by calculating the eigenvectors of $\mathbf{A} \mathbf{A}^T$.
+	\item Missing matrix: $\mathbf{U} = \mathbf{A} \mathbf{V} \mathbf{D}^{-1}$ or solve $\mathbf{AV = UD}$. Can be checked by calculating the eigenvectors of $\mathbf{A} \mathbf{A}^T$.
 	\item normalize each columns of $\mathbf{U}$ and $\mathbf{V}$.
 \end{compactenum}
 
@@ -145,24 +145,28 @@ Using only $K$ largest eigenvalues and corresponding eigenvectors. $\tilde{\math
 	\item[Error Euclidean:] $\|\mathbf{A} - \tilde{\mathbf{A}}\|_2 = \sigma_{K+1}$
 \end{compactdesc}
 
-%\section{Basis Transform}
-%$\mathbf{V}, \mathbf{W}$ are two basis matrices (each column is a basis vector, invertible). Representing $\mathbf{x}$ in basis $\mathbf{V}$ by \emph{coordinate vector} $\mathbf{a}$: $\mathbf{x} = \mathbf{V} \mathbf{a} \Rightarrow \mathbf{a} = \mathbf{V}^{-1} \mathbf{x}$. Knowing $\mathbf{a}$ representing $\mathbf{x}$ in $\mathbf{V}$ we can calculate coordinate vector $\mathbf{b}$ representing $\mathbf{x}$ in $\mathbf{W}$ with: $\mathbf{x} = \mathbf{W}^{-1} \mathbf{b} = \mathbf{V}^{-1} \mathbf{a} \Rightarrow \mathbf{b} = \mathbf{W} \mathbf{V}^{-1} \mathbf{a}$.
+\section{Basis Transform}
+$\mathbf{V}, \mathbf{W}$ are two basis matrices (each column is a basis vector, invertible). Representing $\mathbf{x}$ in basis $\mathbf{V}$ by \emph{coordinate vector} $\mathbf{a}$: $\mathbf{x} = \mathbf{V} \mathbf{a} \Rightarrow \mathbf{a} = \mathbf{V}^{-1} \mathbf{x}$. Knowing $\mathbf{a}$ representing $\mathbf{x}$ in $\mathbf{V}$ we can calculate coordinate vector $\mathbf{b}$ representing $\mathbf{x}$ in $\mathbf{W}$ with: $\mathbf{x} = \mathbf{W}^{-1} \mathbf{b} = \mathbf{V}^{-1} \mathbf{a} \Rightarrow \mathbf{b} = \mathbf{W} \mathbf{V}^{-1} \mathbf{a}$.
 
-%\section{Matrix/Vector}
-%\begin{compactdesc}
-%	\item[Orthogonal:] (i.e. columns are orthonormal!) $\mathbf{A}^{-1} = \mathbf{A}^T$, $\mathbf{A} \mathbf{A}^T = \mathbf{A}^T \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^T \mathbf{A}) = 1$
-%	\item[Inner Product:] (in $\mathbb{R}^D$) $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^T \mathbf{y} = \sum_{i=1}^{N} \mathbf{x}_i \mathbf{y}_i$.
-%	\begin{inparaitem}[\color{red}\textbullet]
-%		\item $\langle \mathbf{x} \pm \mathbf{y}, \mathbf{x} \pm \mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle \pm 2 \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle$
-%		\item $\langle \mathbf{x}, \mathbf{y} + \mathbf{z} \rangle = \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{x}, \mathbf{z} \rangle$
-%		\item $\langle \mathbf{x} + \mathbf{y}, \mathbf{z} \rangle = \langle \mathbf{x}, \mathbf{z} \rangle + \langle \mathbf{y}, \mathbf{z} \rangle$
-%		\item $\langle \mathbf{x}, \mathbf{y} \rangle = \|\mathbf{x}\|_2 \cdot \|\mathbf{y}\|_2 \cdot \cos(\theta)$
-%		\item If $\mathbf{y}$ is a unit vector then $\langle \mathbf{x}, \mathbf{y} \rangle$ projects $\mathbf{x}$ onto $\mathbf{y}$
-%	\end{inparaitem}
-%	\item[Outer Product:] $\mathbf{u} \mathbf{v}^T$, $(\mathbf{u} \mathbf{v}^T)_{i, j} = \mathbf{u}_i \mathbf{v}_j$
-%	\item[Transpose:] $(\mathbf{A}^T)^{-1} = (\mathbf{A}^{-1})^T$
-%	\item[Gram-Schmidt:] $\{\mathbf{w}_i\}_i$ non-orthogonal basis. $\mathbf{v}_n = \mathbf{w}_n - \sum_{i=1}^{n-1} \frac{\langle \mathbf{v}_i, \mathbf{w}_n \rangle}{\langle \mathbf{v}_i, \mathbf{v}_i \rangle} \mathbf{v}_i$ results in $\{\mathbf{v}_i\}_i$ an orthogonal basis
-%\end{compactdesc}
+\section{Matrix/Vector}
+\begin{compactdesc}
+	\item[Orthogonal:] (i.e. columns are orthonormal!) $\mathbf{A}^{-1} = \mathbf{A}^T$, $\mathbf{A} \mathbf{A}^T = \mathbf{A}^T \mathbf{A} = \mathbf{I}$, $\operatorname{det}(\mathbf{A}) \in \{+1, -1\}$, $\operatorname{det}(\mathbf{A}^T \mathbf{A}) = 1$
+	\item[Inner Product:] (in $\mathbb{R}^D$) $\langle \mathbf{x}, \mathbf{y} \rangle = \mathbf{x}^T \mathbf{y} = \sum_{i=1}^{N} \mathbf{x}_i \mathbf{y}_i$.
+	\begin{inparaitem}[\color{red}\textbullet]
+		\item $\langle \mathbf{x} \pm \mathbf{y}, \mathbf{x} \pm \mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle \pm 2 \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle$
+		\item $\langle \mathbf{x}, \mathbf{y} + \mathbf{z} \rangle = \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{x}, \mathbf{z} \rangle$
+		\item $\langle \mathbf{x} + \mathbf{y}, \mathbf{z} \rangle = \langle \mathbf{x}, \mathbf{z} \rangle + \langle \mathbf{y}, \mathbf{z} \rangle$
+		\item $\langle \mathbf{x}, \mathbf{y} \rangle = \|\mathbf{x}\|_2 \cdot \|\mathbf{y}\|_2 \cdot \cos(\theta)$
+		\item If $\mathbf{y}$ is a unit vector then $\langle \mathbf{x}, \mathbf{y} \rangle$ projects $\mathbf{x}$ onto $\mathbf{y}$
+	\end{inparaitem}
+	\item[Outer Product:] $\mathbf{u} \mathbf{v}^T$, $(\mathbf{u} \mathbf{v}^T)_{i, j} = \mathbf{u}_i \mathbf{v}_j$
+	\item[Transpose:] $(\mathbf{A}^T)^{-1} = (\mathbf{A}^{-1})^T,
+	(\mathbf{A+B})^\top = \mathbf{A}^\top + \mathbf{B}^\top,\\
+	(\mathbf{AB})^\top = \mathbf{B}^\top \mathbf{A}^\top,
+	\mathbf{AA}^\top$ symmetric,
+	$\mathbf{A}^\top\mathbf{A}$ pos. semi-definite
+	\item[Gram-Schmidt:] $\{\mathbf{w}_i\}_i$ non-orthogonal basis. $\mathbf{v}_n = \mathbf{w}_n - \sum_{i=1}^{n-1} \frac{\langle \mathbf{v}_i, \mathbf{w}_n \rangle}{\langle \mathbf{v}_i, \mathbf{v}_i \rangle} \mathbf{v}_i$ results in $\{\mathbf{v}_i\}_i$ an orthogonal basis
+\end{compactdesc}
 
 \section{Norms}
 \begin{inparadesc}
@@ -235,18 +239,18 @@ Using only $K$ largest eigenvalues and corresponding eigenvectors. $\tilde{\math
 %\end{inparaenum}
 
 
-%\section{Haar Wavelet}
-%\begin{compactdesc}
-%	\item[Mother function:] $\psi(t)$ is $1$ for $0 \leq t < \frac{1}{2}$, $-1$ for $\frac{1}{2} \leq t < 1$, $0$ otherwise.
-%	\item[Haar function:] $\psi_{n,k}(t) = 2^{n/2} \psi(2^n t - k)$, $2^{n/2}$ only needed if normalized values needed!
-%\end{compactdesc}
-%
-%\begin{compactitem}
-%	\item For the not normalized basis: $\mathbf{W}^{-1} = (\mathbf{W^T} \mathbf{W})^{-1} \mathbf{W}^T = \operatorname{diag}(\frac{1}{l_1}, \ldots, \frac{1}{l_n}) \mathbf{W}^T$ where $l_i$ is the norm of the $i$-th column of $\mathbf{W}$. This is valid because $\mathbf{W}$ is orthogonal!
-%	\item Don't forget $[1, 1, \ldots, 1]^T$: first non-normalized basis!
-%	\item \textbf{``Coding'' step:} Tranform $\mathbf{x}$ into coordinate vector $\mathbf{c}$
-%	\item \textbf{``Thresholding'' step:} Set small absolute values in $\mathbf{c}$ to $0$
-%\end{compactitem}
+\section{Haar Wavelet}
+\begin{compactdesc}
+	\item[Mother function:] $\psi(t)$ is $1$ for $0 \leq t < \frac{1}{2}$, $-1$ for $\frac{1}{2} \leq t < 1$, $0$ otherwise.
+	\item[Haar function:] $\psi_{n,k}(t) = 2^{n/2} \psi(2^n t - k)$, $2^{n/2}$ only needed if normalized values needed!
+\end{compactdesc}
+
+\begin{compactitem}
+	\item For the not normalized basis: $\mathbf{W}^{-1} = (\mathbf{W^T} \mathbf{W})^{-1} \mathbf{W}^T = \operatorname{diag}(\frac{1}{l_1}, \ldots, \frac{1}{l_n}) \mathbf{W}^T$ where $l_i$ is the norm of the $i$-th column of $\mathbf{W}$. This is valid because $\mathbf{W}$ is orthogonal!
+	\item Don't forget $[1, 1, \ldots, 1]^T$: first non-normalized basis!
+	\item \textbf{``Coding'' step:} Tranform $\mathbf{x}$ into coordinate vector $\mathbf{c}$
+	\item \textbf{``Thresholding'' step:} Set small absolute values in $\mathbf{c}$ to $0$
+\end{compactitem}
 
 \section{Optimization}
 Gradient of $f: \mathbb{R}^D \to \mathbb{R}$ is $\nabla f(\mathbf{x}) := \left( \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}_1}, \ldots, \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}_D} \right)^T \in \mathbb{R}^D$
@@ -255,17 +259,19 @@ Gradient of $f: \mathbb{R}^D \to \mathbb{R}$ is $\nabla f(\mathbf{x}) := \left( 
 $x,y, \in \mathcal{Q}, \theta \in [0,1]$.
 $\mathcal{Q}$ is convex if $\forall x,y,\theta : \theta x +(1-\theta) y \in \mathcal{Q}$.\\
 Function $f(\cdot)$ is convex if domain of $f$ is convex and \\
-$\forall x,y,\theta : f(\theta x+(1-\theta)y) \leq \theta f(x)+(1-\theta) f(y)$.
+$\forall x,y,\theta : f(\theta x+(1-\theta)y) \leq \theta f(x)+(1-\theta) f(y)$.\\
+$x$ is a convext combination of $x_1,\dots,x_n$ iff\\ $x=\lambda_1x_1+\dots+\lambda_nx_n$ with $\sum_i\lambda_i=1 \wedge \lambda_i\geq 0$.\\
+Epigraph of $f = \{(x,t) | x \in domain(f), f(x) \leq t\}$
 
-%\subsection{Coordinate Descent}
-%Update one coordinate (the $d$-th), others are fixed.
-%\begin{inparaenum}[\color{red} 1.]
-%	\item Init: $\mathbf{x}^{(0)} \in \mathbb{R}^D$
-%	\item For $t = 0 \ \text{to} \ \mathit{maxIters}$:
-%	\item choose $d$ uniformly from $1, \ldots, D$
-%	\item $u^\star = \argmin_{u \in \mathbb{R}} f(x_1^{(t)}, \ldots, u, \ldots, x_D^{(t)})$
-%	\item $\mathbf{x}_d^{(t+1)} = u^\star$ and $\mathbf{x}_i^{(t+1)} = \mathbf{x}_i^{(t)}$ for $i \neq d$
-%\end{inparaenum}
+\subsection{Coordinate Descent}
+Update one coordinate (the $d$-th), others are fixed.
+\begin{inparaenum}[\color{red} 1.]
+	\item Init: $\mathbf{x}^{(0)} \in \mathbb{R}^D$
+	\item For $t = 0 \ \text{to} \ \mathit{maxIters}$:
+	\item choose $d$ uniformly from $1, \ldots, D$
+	\item $u^\star = \argmin_{u \in \mathbb{R}} f(x_1^{(t)}, \ldots, u, \ldots, x_D^{(t)})$
+	\item $\mathbf{x}_d^{(t+1)} = u^\star$ and $\mathbf{x}_i^{(t+1)} = \mathbf{x}_i^{(t)}$ for $i \neq d$
+\end{inparaenum}
 
 \subsection{Gradient Descent}
 \begin{inparaenum}[\color{red} 1.]
@@ -348,17 +354,25 @@ $\min_{\mathbf{x}_1, \mathbf{x}_2} f_1(\mathbf{x}_1) + f_2(\mathbf{x}_2)$ s. t. 
 
 
 \section{Neural Networks}
-Cross-entropy loss = $-y\log\hat{y}-(1-y)\log(1-
+Squared loss = $\frac{1}{2}(y-\hat{y})^2$,\\
+Cross-entropy loss = $-y\log(\hat{y})-(1-y)\log(1-
 \hat{y})$
 
-Empirical risk = $ \mathcal{L}(\theta;\mathcal{X}) = \overline{l(\mathbf{y};\hat{y}(\mathbf{X};\theta))}$
+Empirical risk = $ \mathcal{L}(\theta;\mathcal{X}) = \frac{1}{T}\sum_{t=1}^{T}l(y_t;\hat{y}(x_t;\theta))$
 
-$L_2$ regularization = $\mathcal{L}_\lambda(\theta;\mathcal{X}) = \frac{\lambda}{2}|\|\theta\|^2_2$
+$L_2$ regularization = $\mathcal{L}_\lambda(\theta;\mathcal{X}) = \mathcal{L}(\theta;\mathcal{X})+\frac{\lambda}{2}|\|\theta\|^2_2$
 
-Jacobi $\mathbf{J}^l=\frac{\partial x^l_i}{\partial x^{l-1}_j}$,
-Backprop $[\nabla_{\mathbf{x}^l\mathcal{L}}]^\top = [\nabla_{\hat{y}\mathcal{L}}]^\top \mathbf{J}^L \cdots \mathbf{J}^{l+1}$
+Jacobi $\mathbf{J}^l_{ij}=\frac{\partial x^l_i}{\partial x^{l-1}_j} = \dot{x}^l_iw_{ij}$,
+$\dot{x}^l_i = \frac{\partial\sigma^l}{\partial z}(z_i)$,
+$z_i = \langle w^l_i,x^{l-1}\rangle$,\\
+Backprop $[\nabla_{\mathbf{x}^l}\mathcal{L}]^\top = [\nabla_{\hat{y}}\mathcal{L}]^\top \mathbf{J}^L \cdots \mathbf{J}^{l+1}$
 
-SGD $\theta \gets (1-\eta\lambda)\theta-\eta\nabla_\theta l(y;\hat{y}(x;\theta))$
+SGD: $\theta \gets (1-\eta\lambda)\theta-\eta\nabla_\theta l(y;\hat{y}(x;\theta))$
+
+\subsection{Output functions}
+Lin. regression $y = \mathbf{W}^Lx^{L-1}$,
+Binary class. (logistic) $y_1=P(1|x) = 1 / (1+\exp[-\langle w^L_1,x^{L-1}\rangle])$, \\
+$K$-class (soft-max) $y_k = P(k|x) = \frac{\exp[\langle w^L_k,x^{L-1} \rangle]}{\sum_{m=1}^{K}\exp[\langle w^L_m,x^{L-1 \rangle]}}$
 
 \section{Differentiation Rules}
 $x^n \rightarrow nx^{n-1}$, 
@@ -394,6 +408,10 @@ SGD: $x_i \gets x_i + 2\eta f(n_{ij})(\log n_{ij} - \langle x_i,y_i \rangle ) y_
 $\min_{\mathbf{U,V}} J(\mathbf{U,V}) = \frac{1}{2}\|\mathbf{X}-\mathbf{U}^\top \mathbf{V}\|^2_F$ with $\mathbf{X,U,V}$ non-negative\\
 Weighted NMF: $\min_{\mathbf{U,V}} J(\mathbf{U,V}) = \frac{1}{2}\|\mathbf{Y} \odot \mathbf{X}-\mathbf{U}^\top \mathbf{V}\|^2_F$\\
 Alternating least squares: Convex in $\mathbf{U}$ and $\mathbf{V}$ separately.
+Column-wise error:\\
+$(x_j-\mathbf{U}^\top v_j)^2=\|x_j\|^2-x^\top_j\mathbf{U}^\top v_j-v^\top_j\mathbf{U}x_j+v^\top_j\mathbf{UU}^\top v_j$\\
+Derive i.r.t. $v_j$ and set to 0 yields $(\mathbf{UU}^\top)v_j=\mathbf{U}x_j$\\
+Equations $(\mathbf{UU}^\top)\mathbf{V} = \mathbf{UX}$, $(\mathbf{VV}^\top)\mathbf{U} = \mathbf{VX}^\top$ to update $\mathbf{V,U}$
 
 %\subsection{LSA}
 %Approx. $\mathbf{X}$ using SVD keeping $K$ largest singular values with $\tilde{\mathbf{X}} = \mathbf{U} \boldsymbol{\Sigma}_K \mathbf{V}^T$. Interpret $(\mathbf{U} \boldsymbol{\Sigma}_K)^T$ as mapping from $D$ dim. word space to $K$ dim. latent topic space. New document $\mathbf{x} \mapsto (\mathbf{U} \boldsymbol{\Sigma}_K)^T \mathbf{x}$. Compare using inner product $\langle \tilde{\mathbf{x}}_1, \tilde{\mathbf{x}}_2 \rangle = \langle (\mathbf{U} \boldsymbol{\Sigma}_K)^T \mathbf{x}_1, (\mathbf{U} \boldsymbol{\Sigma}_K)^T \mathbf{x}_2 \rangle$: Larger value $\Rightarrow$ more similar.
